@@ -1,13 +1,14 @@
 // @flow
 import * as React from 'react'
 //
-import { A, Link, Button as ButtonStyled } from './index.style'
+import { A, Link, Button as ButtonStyled, Input } from './index.style'
 
 export default function Button(props: {
   children: React.Node,
   options: {
     link?: string,
-    tagType: 'Link' | 'a' | 'button',
+    tagType: 'Link' | 'a' | 'button' | 'input',
+    inputType?: string,
     baseColor: string,
     textColor: string,
     inverse?: boolean,
@@ -24,12 +25,14 @@ export default function Button(props: {
   }
 
   let {
-    options: { link, tagType, ...options },
+    options: { link, tagType, inputType, ...options },
     children,
     ...remainingProps
   } = props
 
   tagType = tagType || 'Link'
+
+  if (tagType === 'input' && !inputType) inputType = 'submit'
 
   const buttonProps = {
     ...remainingProps,
@@ -49,6 +52,12 @@ export default function Button(props: {
       )
     case 'button':
       return <ButtonStyled {...buttonProps}>{children}</ButtonStyled>
+    case 'input':
+      return (
+        <Input {...buttonProps} type={inputType}>
+          {children}
+        </Input>
+      )
     case 'Link':
     default:
       return (

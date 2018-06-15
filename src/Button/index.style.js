@@ -13,6 +13,10 @@ export const Button = styled('button')(props => ({
   ...buttonProps(props),
 }))
 
+export const Input = styled('input')(props => ({
+  ...buttonProps(props),
+}))
+
 const buttonProps = ({ options: o }) => ({
   textDecoration: 'none',
   borderColor: `rgb(${o.baseColor})`,
