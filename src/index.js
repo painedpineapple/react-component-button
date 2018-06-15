@@ -27,56 +27,81 @@ const theme = {
   },
 }
 
-const App = () => (
-  <div style={styles}>
-    <div style={sectionStyles}>
-      <Button
-        type="submit"
-        options={{
-          ...theme.button,
-          link: '/contact',
-          tagType: 'button',
-        }}
-      >
-        Button tag
-      </Button>
-    </div>
-    <div style={sectionStyles}>
-      <Button
-        options={{
-          ...theme.button,
-          link: '/contact',
-          tagType: 'a',
-          inverse: false,
-          hoverBaseColor: '184,68,72',
-          hoverEffect: 'default',
-          styles: {
-            ...theme.button.styles,
-            textTransform: 'none',
-          },
-        }}
-      >
-        an a tag
-      </Button>
-    </div>
-    <div style={sectionStyles}>
-      <Router>
-        <Button
-          options={{
-            ...theme.button,
-            link: '/contact',
-            inverse: false,
-            tagType: 'a',
-            styles: {
-              ...theme.button.styles,
-            },
-          }}
-        >
-          Link component
-        </Button>
-      </Router>
-    </div>
-  </div>
-)
+export default class App extends React.Component {
+  parseFile = (fileContents: string) => {
+    console.log(fileContents)
+  }
+  render() {
+    return (
+      <div style={styles}>
+        <div style={sectionStyles}>
+          <Button
+            type="submit"
+            options={{
+              ...theme.button,
+              link: '/contact',
+              tagType: 'button',
+            }}
+          >
+            Button tag
+          </Button>
+        </div>
+        <div style={sectionStyles}>
+          <Button
+            options={{
+              ...theme.button,
+              link: '/contact',
+              tagType: 'a',
+              inverse: false,
+              hoverBaseColor: '184,68,72',
+              hoverEffect: 'default',
+              styles: {
+                ...theme.button.styles,
+                textTransform: 'none',
+              },
+            }}
+          >
+            an a tag
+          </Button>
+        </div>
+        <div style={sectionStyles}>
+          <Button
+            options={{
+              ...theme.button,
+              tagType: 'input',
+              inputAttrs: {
+                type: 'file',
+              },
+            }}
+            renderProps={(buttonProps: any) => {
+              buttonProps.fileContents
+                ? this.parseFile(buttonProps.fileContents)
+                : null
+            }}
+          >
+            File Upload
+          </Button>
+        </div>
+        <div style={sectionStyles}>
+          <Router>
+            <Button
+              options={{
+                ...theme.button,
+                link: '/contact',
+                inverse: false,
+                tagType: 'a',
+                styles: {
+                  ...theme.button.styles,
+                },
+              }}
+            >
+              Link component
+            </Button>
+          </Router>
+        </div>
+      </div>
+    )
+  }
+}
 
 render(<App />, document.getElementById('root'))

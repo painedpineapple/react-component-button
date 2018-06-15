@@ -13,7 +13,29 @@ export const Button = styled('button')(props => ({
   ...buttonProps(props),
 }))
 
-export const Input = styled('input')(props => ({
+export const Input = styled('span')(props => ({
+  position: 'relative',
+
+  input: {
+    fontSize: '0',
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 2,
+    width: '100%',
+    opacity: 0,
+
+    '&:focus': { outline: 'none' },
+  },
+
+  '> span': {
+    position: 'relative',
+    zIndex: 1,
+  },
+
   ...buttonProps(props),
 }))
 
