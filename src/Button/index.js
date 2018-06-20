@@ -4,13 +4,10 @@ import * as React from 'react'
 import { A, Link, Button as ButtonStyled, Input } from './index.style'
 import { readUploadedFileAsText } from './utils'
 
-type tState = {
-  renderProps: {},
-}
+type tState = {}
 
 type tProps = {
   children: React.Node,
-  renderProps?: ({}) => any,
   options: {
     link?: string,
     tagType: 'Link' | 'a' | 'button' | 'input',
@@ -22,36 +19,29 @@ type tProps = {
     hoverDefaultBaseColor: string,
     inputAttrs?: {},
     styles?: {}, // Emotion style object
+    onFileChange?: (fileContents: string, event: any) => void,
   },
 }
 export default class Button extends React.Component<tProps, tState> {
   defaults = {}
-  state = {
-    renderProps: {},
-  }
   handleInputChange = async (event: any) => {
-    const eventProps = {
-      event: event,
-      value: event.target.value,
-      fileContents: undefined,
-    }
     if (event.target.files.length) {
       try {
-        eventProps.fileContents = await readUploadedFileAsText(
-          event.target.files[0],
-        )
+        const fileContents = await readUploadedFileAsText(event.target.files[0])
+
+        if (this.props.options.onFileChange) {
+          this.props.options.onFileChange(fileContents, event)
+        } else {
+          // eslint-disable-next-line no-console
+          console.error(
+            "You must provide an options.onFileChange prop if you're using an tagType of input and it's type is file. ",
+          )
+        }
       } catch (e) {
         // eslint-disable-next-line no-console
         console.warn(e.message)
       }
     }
-    this.setState(prevState => ({
-      ...prevState,
-      renderProps: {
-        ...prevState.renderProps,
-        ...eventProps,
-      },
-    }))
   }
   constructor(props: tProps) {
     super(props)
@@ -65,7 +55,6 @@ export default class Button extends React.Component<tProps, tState> {
   render() {
     let {
       options: { link, tagType, inputAttrs, ...options },
-      renderProps,
       children,
       ...remainingProps
     } = this.props
@@ -93,9 +82,6 @@ export default class Button extends React.Component<tProps, tState> {
       case 'input':
         return (
           <Input {...buttonProps}>
-            {renderProps && this.state.renderProps.event
-              ? renderProps(this.state.renderProps)
-              : null}
             <input onChange={this.handleInputChange} {...inputAttrs} />
             <span>{children}</span>
           </Input>

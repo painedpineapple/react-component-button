@@ -28,7 +28,7 @@ const theme = {
 }
 
 export default class App extends React.Component {
-  parseFile = (fileContents: string) => {
+  parseFile = (fileContents: string, event: any) => {
     console.log(fileContents)
   }
   render() {
@@ -72,11 +72,7 @@ export default class App extends React.Component {
               inputAttrs: {
                 type: 'file',
               },
-            }}
-            renderProps={(buttonProps: any) => {
-              buttonProps.fileContents
-                ? this.parseFile(buttonProps.fileContents)
-                : null
+              onFileChange: this.parseFile,
             }}
           >
             File Upload
