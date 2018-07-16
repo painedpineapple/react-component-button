@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Button from './Button'
+import { Button } from './Button'
 import { Router } from 'react-static'
 
 const styles = {
@@ -36,9 +36,9 @@ export default class App extends React.Component {
       <div style={styles}>
         <div style={sectionStyles}>
           <Button
-            type="submit"
-            options={{
+            {...{
               ...theme.button,
+              type: 'submit',
               link: '/contact',
               tagType: 'button',
             }}
@@ -48,7 +48,7 @@ export default class App extends React.Component {
         </div>
         <div style={sectionStyles}>
           <Button
-            options={{
+            {...{
               ...theme.button,
               link: '/contact',
               tagType: 'a',
@@ -66,7 +66,7 @@ export default class App extends React.Component {
         </div>
         <div style={sectionStyles}>
           <Button
-            options={{
+            {...{
               ...theme.button,
               tagType: 'input',
               inputAttrs: {
@@ -81,7 +81,7 @@ export default class App extends React.Component {
         <div style={sectionStyles}>
           <Router>
             <Button
-              options={{
+              {...{
                 ...theme.button,
                 link: '/contact',
                 inverse: false,

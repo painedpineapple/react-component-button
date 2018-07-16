@@ -39,36 +39,36 @@ export const Input = styled('span')(props => ({
   ...buttonProps(props),
 }))
 
-const buttonProps = ({ options: o }) => ({
+const buttonProps = props => ({
   textDecoration: 'none',
-  borderColor: `rgb(${o.baseColor})`,
+  borderColor: `rgb(${props.baseColor})`,
   cursor: 'pointer',
 
-  ...colorProps(o),
-  ...hoverProps(o),
+  ...colorProps(props),
+  ...hoverProps(props),
 
-  ...o.styles,
+  ...props.styles,
 })
 
-function colorProps(o) {
-  if (o.inverse) {
-    switch (o.inverseStyle) {
+function colorProps(props) {
+  if (props.inverse) {
+    switch (props.inverseStyle) {
       case 'transparent':
         return {
           backgroundColor: 'rgba(255,255,255,0)',
-          color: `rgb(${o.baseColor})`,
+          color: `rgb(${props.baseColor})`,
         }
       case 'default':
       default:
         return {
-          backgroundColor: `rgb(${o.textColor})`,
-          color: `rgb(${o.baseColor})`,
+          backgroundColor: `rgb(${props.textColor})`,
+          color: `rgb(${props.baseColor})`,
         }
     }
   } else {
     return {
-      backgroundColor: `rgb(${o.baseColor})`,
-      color: `rgb(${o.textColor})`,
+      backgroundColor: `rgb(${props.baseColor})`,
+      color: `rgb(${props.textColor})`,
     }
   }
 }
@@ -83,8 +83,8 @@ const rippleOut = keyframes({
   },
 })
 
-function hoverProps(o) {
-  switch (o.hoverEffect) {
+function hoverProps(props) {
+  switch (props.hoverEffect) {
     case 'ripple':
       return {
         transformOrigin: 'center',
@@ -102,8 +102,8 @@ function hoverProps(o) {
         },
         '&:hover,&:focus': {
           textDecoration: 'none',
-          color: `rgb(${o.textColor})`,
-          backgroundColor: `rgb(${o.baseColor})`,
+          color: `rgb(${props.textColor})`,
+          backgroundColor: `rgb(${props.baseColor})`,
           '&::after': {
             animation: `${rippleOut} 0.5s`,
           },
@@ -114,9 +114,13 @@ function hoverProps(o) {
       return {
         '&:hover,&:focus': {
           textDecoration: 'none',
-          backgroundColor: `rgb(${o.inverse ? o.baseColor : o.hoverBaseColor})`,
-          borderColor: `rgb(${o.inverse ? o.baseColor : o.hoverBaseColor})`,
-          color: `rgb(${o.textColor})`,
+          backgroundColor: `rgb(${
+            props.inverse ? props.baseColor : props.hoverBaseColor
+          })`,
+          borderColor: `rgb(${
+            props.inverse ? props.baseColor : props.hoverBaseColor
+          })`,
+          color: `rgb(${props.textColor})`,
         },
       }
   }

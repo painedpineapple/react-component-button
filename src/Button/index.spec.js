@@ -2,7 +2,7 @@ import React from 'react'
 import faker from 'faker'
 import { render } from 'react-testing-library'
 //
-import Button from './'
+import { Button } from './'
 
 describe('Button Component Test', () => {
   it('Renders, and with the href and other props passed to it.', () => {
@@ -10,7 +10,7 @@ describe('Button Component Test', () => {
     const button = getByText(props.children)
 
     expect(button).toBeDefined()
-    expect(button.href).toBe(props.options.link)
+    expect(button.href).toBe(props.link)
   })
 
   it('Renders an <a> tag if tagType is a or Link', () => {
@@ -21,9 +21,7 @@ describe('Button Component Test', () => {
   })
 
   it('Renders an <button> tag if tagType is button', () => {
-    const { getByTestId } = renderSetup({
-      options: { tagType: 'button' },
-    })
+    const { getByTestId } = renderSetup({ tagType: 'button' })
     const button = getByTestId('component-button')
 
     expect(button.nodeName).toBe('BUTTON')
@@ -33,9 +31,7 @@ describe('Button Component Test', () => {
 function renderSetup(overrides) {
   const props = {
     children: 'Contact Us',
-    options: {
-      link: `${faker.internet.url()}/`,
-    },
+    link: `${faker.internet.url()}/`,
     ...overrides,
   }
 

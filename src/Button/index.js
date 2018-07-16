@@ -8,33 +8,31 @@ type tState = {}
 
 type tProps = {
   children: React.Node,
-  options: {
-    link?: string,
-    tagType: 'Link' | 'a' | 'button' | 'input',
-    baseColor: string,
-    textColor: string,
-    inverse?: boolean,
-    inverseStyle?: 'default' | 'transparent',
-    hoverEffect?: 'default' | 'ripple',
-    hoverDefaultBaseColor: string,
-    inputAttrs?: {},
-    styles?: {}, // Emotion style object
-    onFileChange?: (fileContents: string, event: any) => void,
-  },
+  link?: string,
+  tagType: 'Link' | 'a' | 'button' | 'input',
+  baseColor: string,
+  textColor: string,
+  inverse?: boolean,
+  inverseStyle?: 'default' | 'transparent',
+  hoverEffect?: 'default' | 'ripple',
+  hoverDefaultBaseColor: string,
+  inputAttrs?: {},
+  styles?: {}, // Emotion style object
+  onFileChange?: (fileContents: string, event: any) => void,
 }
-export default class Button extends React.Component<tProps, tState> {
+export class Button extends React.Component<tProps, tState> {
   defaults = {}
   handleInputChange = async (event: any) => {
     if (event.target.files.length) {
       try {
         const fileContents = await readUploadedFileAsText(event.target.files[0])
 
-        if (this.props.options.onFileChange) {
-          this.props.options.onFileChange(fileContents, event)
+        if (this.props.onFileChange) {
+          this.props.onFileChange(fileContents, event)
         } else {
           // eslint-disable-next-line no-console
           console.error(
-            "You must provide an options.onFileChange prop if you're using an tagType of input and it's type is file. ",
+            "You must provide an onFileChange prop if you're using an tagType of input and it's type is file. ",
           )
         }
       } catch (e) {
@@ -54,20 +52,35 @@ export default class Button extends React.Component<tProps, tState> {
   }
   render() {
     let {
-      options: { link, tagType, inputAttrs, ...options },
+      link,
+      tagType,
+      inputAttrs,
+      baseColor,
+      textColor,
+      inverse,
+      inverseStyle,
+      hoverEffect,
+      hoverDefaultBaseColor,
+      styles,
+      onFileChange,
       children,
-      ...remainingProps
+      ...attrs
     } = this.props
 
     tagType = tagType || 'Link'
 
     const buttonProps = {
-      ...remainingProps,
-      options: {
-        ...this.defaults,
-        ...options,
-      },
-      ['data-testid']: 'component-button',
+      ...this.defaults,
+      ...attrs,
+      tagType,
+      baseColor,
+      textColor,
+      inverse,
+      inverseStyle,
+      hoverEffect,
+      hoverDefaultBaseColor,
+      styles,
+      'data-testid': 'component-button',
     }
 
     switch (tagType) {
