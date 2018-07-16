@@ -23,6 +23,7 @@ type tProps = {
 export class Button extends React.Component<tProps, tState> {
   defaults = {}
   handleInputChange = async (event: any) => {
+    event.persist()
     if (event.target.files.length) {
       try {
         const fileContents = await readUploadedFileAsText(event.target.files[0])
