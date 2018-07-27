@@ -1,36 +1,36 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Button } from './Button'
-import { Router } from 'react-static'
+import React from "react";
+import { render } from "react-dom";
+import { Button } from "./Button";
+import { Router } from "react-static";
 
 const styles = {
-  fontFamily: 'sans-serif',
-  textAlign: 'center',
-}
+  fontFamily: "sans-serif",
+  textAlign: "center"
+};
 
 const sectionStyles = {
-  margin: '40px auto',
-}
+  margin: "40px auto"
+};
 
 const theme = {
   button: {
-    baseColor: '255,89,89',
-    textColor: '255,255,255',
+    baseColor: "255,89,89",
+    textColor: "255,255,255",
     inverse: true,
-    hoverEffect: 'ripple',
+    hoverEffect: "ripple",
     styles: {
-      transition: '0.5s ease',
-      padding: '8px 25px',
-      textTransform: 'uppercase',
-      fontSize: 14,
-    },
-  },
-}
+      transition: "0.5s ease",
+      padding: "8px 25px",
+      textTransform: "uppercase",
+      fontSize: 14
+    }
+  }
+};
 
 export default class App extends React.Component {
   parseFile = (fileContents: string, event: any) => {
-    console.log(fileContents)
-  }
+    console.log(fileContents);
+  };
   render() {
     return (
       <div style={styles}>
@@ -38,9 +38,9 @@ export default class App extends React.Component {
           <Button
             {...{
               ...theme.button,
-              type: 'submit',
-              link: '/contact',
-              tagType: 'button',
+              type: "submit",
+              link: "/contact",
+              tagType: "button"
             }}
           >
             Button tag
@@ -50,15 +50,15 @@ export default class App extends React.Component {
           <Button
             {...{
               ...theme.button,
-              link: '/contact',
-              tagType: 'a',
+              link: "/contact",
+              tagType: "a",
               inverse: false,
-              hoverBaseColor: '184,68,72',
-              hoverEffect: 'default',
+              hoverBaseColor: "184,68,72",
+              hoverEffect: "default",
               styles: {
                 ...theme.button.styles,
-                textTransform: 'none',
-              },
+                textTransform: "none"
+              }
             }}
           >
             an a tag
@@ -68,11 +68,11 @@ export default class App extends React.Component {
           <Button
             {...{
               ...theme.button,
-              tagType: 'input',
+              tagType: "input",
               inputAttrs: {
-                type: 'file',
+                type: "file"
               },
-              onFileChange: this.parseFile,
+              onFileChange: this.parseFile
             }}
           >
             File Upload
@@ -83,12 +83,12 @@ export default class App extends React.Component {
             <Button
               {...{
                 ...theme.button,
-                link: '/contact',
+                link: "/contact",
                 inverse: false,
-                tagType: 'a',
+                tagType: "a",
                 styles: {
-                  ...theme.button.styles,
-                },
+                  ...theme.button.styles
+                }
               }}
             >
               Link component
@@ -96,8 +96,8 @@ export default class App extends React.Component {
           </Router>
         </div>
       </div>
-    )
+    );
   }
 }
 
-render(<App />, document.getElementById('root'))
+render(<App />, document.getElementById("root"));
